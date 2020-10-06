@@ -108,6 +108,7 @@ defmodule MsgpaxTest do
 
     case Application.get_env(:msgpax, :float_type, :float64) do
       :float32 ->
+        IO.puts "FLOAT32!!"
         assert_format 42.5, <<202>>
 
       _ ->
