@@ -172,6 +172,7 @@ MsgPax.PackerMacros.excluded?(:map) do
       end
     end
   end
+end
 
 MsgPax.PackerMacros.excluded?(:list) do
   defimpl Msgpax.Packer, for: List do
