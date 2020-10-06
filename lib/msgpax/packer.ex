@@ -190,12 +190,20 @@ defimpl Msgpax.Packer, for: List do
 end
 
 defimpl Msgpax.Packer, for: Float do
+  @float_type Application.get_env(:msgpax, :float_type, :float64)
+
   def pack(num) do
-    <<0xCB, num::64-float>>
+    case @float_type do
+      :float32 ->
+        <<0xCA, num::32-float>>
+      _ ->
+        <<0xCB, num::64-float>>
+    end
   end
 end
 
 defimpl Msgpax.Packer, for: Integer do
+  @spec pack(any) :: <<_::24, _::_*16>> | [...]
   def pack(int) when int < 0 do
     cond do
       int >= -32 -> [0x100 + int]
